@@ -1,0 +1,9 @@
+[package]
+name = "driver"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+graph={ path = "../graph" }
+tree={ path = "../tree" }
+shared={ path = "../shared" }
