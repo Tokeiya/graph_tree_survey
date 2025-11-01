@@ -11,3 +11,4 @@ mockall = "*"
 shared={ path = "../shared" }
 rand_distr = "*"
 rand = "*"
+thiserror = "*"
