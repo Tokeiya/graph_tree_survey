@@ -8,3 +8,4 @@ shared = { path = "../shared" }
 thiserror = "*"
 rand_distr = "*"
 rand = "*"
+rand_core = "*"

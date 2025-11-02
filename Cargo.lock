@@ -179,6 +179,7 @@ name = "tree"
 version = "0.1.0"
 dependencies = [
  "rand",
+ "rand_core",
  "rand_distr",
  "shared",
  "thiserror",
