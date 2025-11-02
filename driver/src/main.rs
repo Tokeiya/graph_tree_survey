@@ -1,3 +1,7 @@
+use shared::argument_error::ArgumentError;
+
 fn main() {
-    println!("Hello, world!");
+	let err = ArgumentError::InvalidArgument("hoge".to_string(), Some("fuga".to_string()));
+
+	println!("{:?}", err);
 }

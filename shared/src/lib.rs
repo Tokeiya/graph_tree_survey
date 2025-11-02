@@ -1,2 +1,2 @@
-mod argument_error;
+pub mod argument_error;
 mod dump_relation;
