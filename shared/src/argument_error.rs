@@ -1,12 +1,16 @@
 use thiserror::Error;
 
+fn disp(arg_name: &str, detail: &Option<String>) -> String {
+	if let Some(detail) = detail {
+		format!("{} InvalidArgument:{}", arg_name, detail)
+	} else {
+		format!("{} InvalidArgument", arg_name)
+	}
+}
+
 #[derive(Error, Debug)]
 pub enum ArgumentError {
-	#[error("Invalid argument: {0}{detail}",
-        detail = .1.as_deref()
-                    .map(|s| format!(" ({s})"))  // Someなら " (補足)" を作る
-                    .unwrap_or_default()         // Noneなら空文字
-	)]
+	#[error("Invalid argument: {0}{detail}", detail = disp(.0, .1))]
 	InvalidArgument(String, Option<String>),
 
 	#[error("Argument out of range: {0}")]
