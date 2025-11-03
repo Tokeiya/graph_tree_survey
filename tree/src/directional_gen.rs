@@ -48,11 +48,10 @@ mod tests {
 
 		impl RngCore for Rnd {
 			fn next_u32(&mut self) -> u32;
-
 			fn next_u64(&mut self) -> u64;
-
 			fn fill_bytes(&mut self, dst: &mut [u8]);
 		}
-
 	}
+
+	fn gen_mock() -> MockRnd {}
 }
