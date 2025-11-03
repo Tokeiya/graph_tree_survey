@@ -1,4 +1,4 @@
-mod directional_gen;
+pub mod directional_gen;
 mod edge;
 mod node;
-mod simple_tree;
+pub mod simple_tree;
