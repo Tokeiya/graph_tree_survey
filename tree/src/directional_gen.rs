@@ -12,8 +12,13 @@ pub struct DirectionalGenerator<T> {
 }
 
 impl<T: Rng> DirectionalGenerator<T> {
-	pub fn new(rng: T) -> Self {
-		todo!()
+	pub fn new(mut rng: T) -> Self {
+		let c = rng.next_u64();
+		Self {
+			rng,
+			cache: c,
+			cnt: 0,
+		}
 	}
 
 	pub fn generate_with_offset(&mut self, offset: usize) -> usize {
@@ -42,6 +47,7 @@ mod tests {
 	use super::*;
 	use mockall::*;
 	use rand::RngCore;
+	use std::os::unix::raw::gid_t;
 
 	mock! {
 		 Rnd{}
@@ -53,5 +59,34 @@ mod tests {
 		}
 	}
 
-	fn gen_mock() -> MockRnd {}
+	fn gen_mock() -> MockRnd {
+		let mut mock = MockRnd::new();
+		let mut i = 0u64.wrapping_sub(1);
+
+		mock.expect_next_u64().return_const(131072u64);
+
+		mock.expect_next_u32().never();
+		mock.expect_fill_bytes().never();
+
+		mock
+	}
+
+	#[test]
+	fn new_test() {
+		let mock = gen_mock();
+		let fixture = DirectionalGenerator::new(mock);
+
+		assert_eq!(fixture.cnt, 0);
+		assert_eq!(fixture.cache, 1);
+	}
+
+	#[test]
+	fn generate_test() {
+		let mock = gen_mock();
+		let mut fixture = DirectionalGenerator::new(mock);
+
+		for i in 0..24 {
+			println!("{}:{}", i, fixture.generate())
+		}
+	}
 }
