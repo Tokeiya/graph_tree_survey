@@ -61,9 +61,8 @@ mod tests {
 
 	fn gen_mock() -> MockRnd {
 		let mut mock = MockRnd::new();
-		let mut i = 0u64.wrapping_sub(1);
 
-		mock.expect_next_u64().return_const(131072u64);
+		mock.expect_next_u64().return_const(7812738666512280684u64);
 
 		mock.expect_next_u32().never();
 		mock.expect_fill_bytes().never();
@@ -85,8 +84,12 @@ mod tests {
 		let mock = gen_mock();
 		let mut fixture = DirectionalGenerator::new(mock);
 
-		for i in 0..24 {
-			println!("{}:{}", i, fixture.generate())
+		let mut actual = 0u64;
+
+		for i in 0..32 {
+			actual |= fixture.generate() << (i * 2);
 		}
+
+		assert_eq!(actual, 7812738666512280684u64);
 	}
 }
