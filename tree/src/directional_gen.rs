@@ -21,7 +21,7 @@ impl<T: Rng> DirectionalGenerator<T> {
 		}
 	}
 
-	pub fn generate_with_offset(&mut self, offset: usize) -> usize {
+	pub fn generate_with_offset(&mut self, offset: u64) -> u64 {
 		todo!()
 	}
 
@@ -47,7 +47,6 @@ mod tests {
 	use super::*;
 	use mockall::*;
 	use rand::RngCore;
-	use std::os::unix::raw::gid_t;
 
 	mock! {
 		 Rnd{}
@@ -91,5 +90,10 @@ mod tests {
 		}
 
 		assert_eq!(actual, 7812738666512280684u64);
+	}
+
+	#[test]
+	fn offset_test() {
+		let mut fixture = DirectionalGenerator::new(gen_mock());
 	}
 }
