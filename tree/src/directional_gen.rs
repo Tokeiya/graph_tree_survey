@@ -5,14 +5,14 @@ const LIMIT: usize = 16usize;
 const MASK: u64 = 0x03;
 const SHIFT: u64 = 0x02;
 
-pub struct DirectionalGenerator<T> {
-	rng: T,
+pub struct DirectionalGenerator<'a, T> {
+	rng: &'a mut T,
 	cache: u64,
 	cnt: usize,
 }
 
-impl<T: Rng> DirectionalGenerator<T> {
-	pub fn new(mut rng: T) -> Self {
+impl<'a, T: Rng> DirectionalGenerator<'a, T> {
+	pub fn new(rng: &'a mut T) -> Self {
 		let c = rng.next_u64();
 		Self {
 			rng,
@@ -26,6 +26,8 @@ impl<T: Rng> DirectionalGenerator<T> {
 	}
 
 	fn fill_cache(&mut self) {
+		let a = self.rng.next_u64();
+
 		self.cache = self.rng.next_u64();
 		self.cnt = 0;
 	}
@@ -71,17 +73,17 @@ mod tests {
 
 	#[test]
 	fn new_test() {
-		let mock = gen_mock();
-		let fixture = DirectionalGenerator::new(mock);
+		let mut mock = gen_mock();
+		let fixture = DirectionalGenerator::new(&mut mock);
 
 		assert_eq!(fixture.cnt, 0);
-		assert_eq!(fixture.cache, 1);
+		assert_eq!(fixture.cache, 0x1b1b1b1b1b1b1b1bu64);
 	}
 
 	#[test]
 	fn generate_test() {
-		let mock = gen_mock();
-		let mut fixture = DirectionalGenerator::new(mock);
+		let mut mock = gen_mock();
+		let mut fixture = DirectionalGenerator::new(&mut mock);
 
 		let mut actual = 0u64;
 
@@ -89,12 +91,13 @@ mod tests {
 			actual |= fixture.generate() << (i * 2);
 		}
 
-		assert_eq!(actual, 7812738666512280684u64);
+		assert_eq!(actual, 0x1b1b1b1b1b1b1b1bu64);
 	}
 
 	#[test]
 	fn offset_test() {
-		let mut fixture = DirectionalGenerator::new(gen_mock());
+		let mut mock = gen_mock();
+		let mut fixture = DirectionalGenerator::new(&mut mock);
 		let expected = [4u64, 3, 2, 1];
 
 		for i in 0..16 {
