@@ -22,7 +22,7 @@ impl<T: Rng> DirectionalGenerator<T> {
 	}
 
 	pub fn generate_with_offset(&mut self, offset: u64) -> u64 {
-		todo!()
+		self.generate() + offset
 	}
 
 	fn fill_cache(&mut self) {
@@ -61,7 +61,7 @@ mod tests {
 	fn gen_mock() -> MockRnd {
 		let mut mock = MockRnd::new();
 
-		mock.expect_next_u64().return_const(7812738666512280684u64);
+		mock.expect_next_u64().return_const(0x1b1b1b1b1b1b1b1bu64);
 
 		mock.expect_next_u32().never();
 		mock.expect_fill_bytes().never();
@@ -95,5 +95,11 @@ mod tests {
 	#[test]
 	fn offset_test() {
 		let mut fixture = DirectionalGenerator::new(gen_mock());
+		let expected = [4u64, 3, 2, 1];
+
+		for i in 0..16 {
+			let actual = fixture.generate_with_offset(1);
+			assert_eq!(actual, expected[i & 3]);
+		}
 	}
 }
