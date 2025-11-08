@@ -3,15 +3,10 @@ use rand::Rng;
 use rand_core::RngCore;
 use shared::argument_error::ArgumentError;
 use std::collections::VecDeque;
-
 fn main() {
-	let mut queue = VecDeque::new();
-	queue.push_back(0);
-	queue.push_back(1);
-	queue.push_back(2);
+	let rng = rand::rng();
+	let mut generator =
+		tree::simple_maze_generator::SimpleMazeGenerator::try_new(rng, 3, 100).unwrap();
 
-	println!("{:?}", queue.pop_front());
-	queue.push_back(3);
-
-	println!("{:?}", queue.pop_front());
+	let maze = generator.generate();
 }

@@ -8,7 +8,7 @@ edition = "2024"
 mockall = "*"
 
 [dependencies]
-shared={ path = "../shared" }
+shared = { path = "../shared" }
 rand_distr = "*"
 rand = "*"
 thiserror = "*"

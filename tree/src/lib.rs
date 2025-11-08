@@ -1,6 +1,6 @@
 pub mod directional_gen;
-mod edge;
-mod simple_maze_generator;
+pub mod edge;
+pub mod simple_maze_generator;
 pub mod simple_tree;
-mod tree_error;
-mod visualize;
+pub mod tree_error;
+pub mod visualize;
