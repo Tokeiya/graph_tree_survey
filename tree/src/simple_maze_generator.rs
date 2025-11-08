@@ -60,14 +60,16 @@ impl<T: Rng> SimpleMazeGenerator<T> {
 
 			if let Some(parent) = queue.pop_front() {
 				if self.boost_threshold > cnt {
-					for _ in 0..dir.generate_with_offset(1) {
+					let direction = dir.generate_with_offset(1, &mut self.rnd);
+					for _ in 0..direction {
 						let child = tree.add_node();
 						queue.push_back(child);
 
 						let a = dist.sample(&mut self.rnd);
-
 						tree.add_edge(parent, child, dist.sample(&mut self.rnd))
 					}
+
+					cnt += direction as usize;
 				}
 				cnt += 1;
 			} else {
