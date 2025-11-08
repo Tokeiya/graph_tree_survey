@@ -22,7 +22,6 @@ impl DirectionalGenerator {
 
 	fn fill_cache<T: Rng>(&mut self, rng: &mut T) {
 		let a = rng.next_u64();
-
 		self.cache = rng.next_u64();
 		self.cnt = 0;
 	}

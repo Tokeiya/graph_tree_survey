@@ -46,7 +46,7 @@ impl<T: Rng> SimpleMazeGenerator<T> {
 		let mut tree = Tree::new();
 		let mut cnt = 0usize;
 
-		let mut dist = rand_distr::Uniform::new(0f64, 5.0f64).unwrap();
+		let dist = rand_distr::Uniform::new(0f64, 5.0f64).unwrap();
 
 		let mut dir = DirectionalGenerator::new(&mut self.rnd);
 		let mut queue = VecDeque::<usize>::new();
@@ -71,12 +71,11 @@ impl<T: Rng> SimpleMazeGenerator<T> {
 
 					cnt += direction as usize;
 				}
-				cnt += 1;
 			} else {
 				break;
 			}
 		}
 
-		todo!()
+		tree
 	}
 }

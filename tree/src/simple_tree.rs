@@ -17,4 +17,12 @@ impl Tree {
 		self.0[from].push(Edge::new(to, cost));
 		self.0[to].push(Edge::new(from, cost));
 	}
+
+	pub fn length(&self) -> usize {
+		self.0.len()
+	}
+
+	pub fn edges(&self) -> &[Vec<Edge>] {
+		&self.0
+	}
 }
