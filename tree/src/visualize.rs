@@ -12,7 +12,7 @@ pub fn write_mermaid(root: &Tree, writer: &mut impl Write) {
 			if node < edge.to() {
 				writer
 					.write_fmt(format_args!(
-						"{}[{}] -- {} -- {}[{}]",
+						"{}[{}] -- {:.2} --- {}[{}]\n",
 						node,
 						node,
 						edge.cost(),
