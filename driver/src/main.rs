@@ -8,11 +8,13 @@ fn main() {
 
 	let rng = rand::rng();
 	let mut generator =
-		tree::simple_maze_generator::SimpleMazeGenerator::try_new(rng, 3, 100).unwrap();
+		tree::simple_maze_generator::SimpleMazeGenerator::try_new(rng, 3, 30).unwrap();
 
 	let maze = generator.generate();
 
 	let mut file = std::fs::File::create("maze.mmd").unwrap();
 
-	tree::visualize::write_mermaid(&maze, &mut file)
+	tree::visualize::write_mermaid(&maze, &mut file);
+
+	println!("node:{}", maze.length())
 }

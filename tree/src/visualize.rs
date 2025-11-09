@@ -1,5 +1,4 @@
 use crate::simple_tree::Tree;
-use std::fs::write;
 use std::io::Write;
 
 pub fn write_mermaid(root: &Tree, writer: &mut impl Write) {
